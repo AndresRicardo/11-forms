@@ -12,12 +12,19 @@ const regExpUserEmail =
 const pintarMensajeError = (errores) => {
     alertSuccess.style.display = "none";
 
+    userName.classList.remove("is-invalid");
+    userEmail.classList.remove("is-invalid");
+    userName.classList.add("is-valid");
+    userEmail.classList.add("is-valid");
+
     errores.forEach((element) => {
         if (element.tipo === "alertName") {
+            userName.classList.add("is-invalid");
             alertName.textContent = element.msg;
             alertName.classList.remove("d-none");
             alertName.style.display = "block";
         } else if (element.tipo === "alertEmail") {
+            userEmail.classList.add("is-invalid");
             alertEmail.textContent = element.msg;
             alertEmail.classList.remove("d-none");
             alertEmail.style.display = "block";
@@ -30,6 +37,10 @@ const pintarMensajeError = (errores) => {
 const pintarMensajeExito = () => {
     alertName.style.display = "none";
     alertEmail.style.display = "none";
+    userName.classList.remove("is-invalid");
+    userEmail.classList.remove("is-invalid");
+    userName.classList.add("is-valid");
+    userEmail.classList.add("is-valid");
 
     alertSuccess.classList.remove("d-none"); //alimina clases
     alertSuccess.style.display = "block"; // en este caso sobra esta linea
@@ -52,7 +63,7 @@ formulario.addEventListener("submit", (e) => {
             msg: "Escriba un nombre valido. Solo letras",
         });
     }
-    if (!regExpUserEmail.test(userEmail.value)) {
+    if (!regExpUserEmail.test(userEmail.value) || !userEmail.value.trim()) {
         errores.push({
             tipo: "alertEmail",
             msg: "Escriba un correo valido",
